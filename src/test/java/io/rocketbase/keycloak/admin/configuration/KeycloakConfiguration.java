@@ -1,5 +1,6 @@
 package io.rocketbase.keycloak.admin.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.adapters.AdapterDeploymentContext;
 import org.keycloak.adapters.springsecurity.AdapterDeploymentContextFactoryBean;
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
@@ -28,6 +29,7 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
@@ -57,6 +59,7 @@ public class KeycloakConfiguration extends KeycloakWebSecurityConfigurerAdapter 
 
     @Bean
     public Resource keycloakConfig() throws Exception {
+        log.info("keycloak server is found under: {}", environment.getProperty("keycloak.server.baseuri"));
         Pattern pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 
         StringBuffer buffer = new StringBuffer();
