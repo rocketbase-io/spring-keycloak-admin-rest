@@ -1,0 +1,7 @@
+{
+  "realm": "IntegrationTest",
+  "auth-server-url": "https://auth.voucher.rocketbase.io/auth",
+  "ssl-required": "external",
+  "resource": "login",
+  "public-client": true
+}
