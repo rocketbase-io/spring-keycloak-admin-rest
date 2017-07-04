@@ -18,6 +18,7 @@ import org.keycloak.common.util.KeycloakUriBuilder;
 import org.keycloak.constants.ServiceUrlConstants;
 import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.util.JsonSerialization;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpHeaders;
@@ -40,6 +41,12 @@ public abstract class BaseKeycloakRestTest {
 
     @Resource
     private TestRestTemplate testRestTemplate;
+
+    @Value("${keycloak.server.baseuri}")
+    private String keycloakUri;
+
+    @Resource
+    private org.springframework.core.io.Resource keycloakConfig;
 
     private RestTemplate restTemplate;
 
@@ -93,9 +100,9 @@ public abstract class BaseKeycloakRestTest {
         CloseableHttpClient client = HttpClientBuilder.create()
                 .build();
         try {
-            HttpPost post = new HttpPost(KeycloakUriBuilder.fromUri("https://auth.voucher.rocketbase.io/auth")
+            HttpPost post = new HttpPost(KeycloakUriBuilder.fromUri(keycloakUri + "/auth")
                     .path(ServiceUrlConstants.TOKEN_PATH)
-                    .build("IntegrationTest"));
+                    .build("test"));
             List<NameValuePair> formparams = new ArrayList<NameValuePair>();
             formparams.add(new BasicNameValuePair(OAuth2Constants.GRANT_TYPE, "password"));
             formparams.add(new BasicNameValuePair("username", username));
@@ -133,7 +140,8 @@ public abstract class BaseKeycloakRestTest {
     }
 
     protected KeycloakDeployment getKeycloakDeployment() throws Exception {
-        return KeycloakDeploymentBuilder.build(getClass().getResourceAsStream("/realms/keycloak.json"));
+        KeycloakDeployment build = KeycloakDeploymentBuilder.build(keycloakConfig.getInputStream());
+        return build;
     }
 
 
