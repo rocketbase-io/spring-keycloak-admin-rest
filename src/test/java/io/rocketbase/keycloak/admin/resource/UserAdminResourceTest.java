@@ -27,10 +27,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @Slf4j
-public class UserKeycloakAdminResourceTest extends BaseKeycloakRestTest {
+public class UserAdminResourceTest extends BaseKeycloakRestTest {
 
     @Resource
-    private UserKeycloakAdminResource userKeycloakAdminResource;
+    private UserAdminResource userKeycloakAdminResource;
 
     private KeycloakPrincipal<? extends KeycloakSecurityContext> principal;
 

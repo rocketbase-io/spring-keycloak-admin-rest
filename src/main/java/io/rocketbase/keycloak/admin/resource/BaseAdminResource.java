@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("WeakerAccess")
-public abstract class BaseKeycloakAdminResource {
+public abstract class BaseAdminResource {
 
     private static final Pattern REALM_URI_PATTERN = Pattern.compile("(https?://.*/auth)/realms/(.*)");
 

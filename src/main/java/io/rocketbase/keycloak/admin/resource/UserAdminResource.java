@@ -17,7 +17,7 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class UserKeycloakAdminResource extends BaseKeycloakAdminResource {
+public class UserAdminResource extends BaseAdminResource {
 
     public List<UserRepresentation> findAllContaining(@NotNull String search) {
         ResponseEntity<List<UserRepresentation>> entity = getRestTemplate().exchange(findBaseUrl("users?search={search}"),
