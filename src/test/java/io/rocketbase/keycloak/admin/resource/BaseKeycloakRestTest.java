@@ -39,9 +39,9 @@ import java.util.List;
 public abstract class BaseKeycloakRestTest {
 
     @Resource
-    protected TestRestTemplate testRestTemplate;
+    private TestRestTemplate testRestTemplate;
 
-    protected RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @Before
     public void setup() throws Exception {
