@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -101,6 +102,25 @@ public abstract class BaseAdminResource {
                     .getReasonPhrase());
         }
         return null;
+    }
+
+    protected <T> T interpretCreatedResponse(ResponseEntity<Void> entity, Class<T> clazz) {
+        if (entity.getStatusCode()
+                .equals(HttpStatus.CREATED)) {
+            URI location = entity.getHeaders()
+                    .getLocation();
+            if (location != null) {
+                return interpretResponse(getRestTemplate().getForEntity(location.toString(), clazz));
+            }
+        }
+        throw new InternalServerErrorException("could not interpret status: " + entity.getStatusCode());
+    }
+
+    protected void interpretUpdatedResponse(ResponseEntity<Void> entity) {
+        if (!entity.getStatusCode()
+                .equals(HttpStatus.NO_CONTENT)) {
+            throw new InternalServerErrorException("could not interpret status: " + entity.getStatusCode());
+        }
     }
 
 

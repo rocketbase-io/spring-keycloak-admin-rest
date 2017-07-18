@@ -1,18 +1,15 @@
 package io.rocketbase.keycloak.admin.resource;
 
-import io.rocketbase.keycloak.admin.exception.InternalServerErrorException;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.GroupRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
-import java.net.URI;
 import java.util.List;
 
 @Component
@@ -39,15 +36,7 @@ public class UserAdminResource extends BaseAdminResource {
         ResponseEntity<Void> entity = getRestTemplate().postForEntity(findBaseUrl("users"), userRepresentation, Void.class);
         interpretErrorResponse(entity);
 
-        if (entity.getStatusCode()
-                .equals(HttpStatus.CREATED)) {
-            URI location = entity.getHeaders()
-                    .getLocation();
-            if (location != null) {
-                return interpretResponse(getRestTemplate().getForEntity(location.toString(), UserRepresentation.class));
-            }
-        }
-        throw new InternalServerErrorException("could not interpret status: " + entity.getStatusCode());
+        return interpretCreatedResponse(entity, UserRepresentation.class);
     }
 
     public void updateTemporaryPassword(@NotNull String keycloakUserId, @NotNull String newPassword) {
