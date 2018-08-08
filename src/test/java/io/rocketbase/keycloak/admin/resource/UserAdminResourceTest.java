@@ -52,10 +52,11 @@ public class UserAdminResourceTest extends BaseKeycloakRestTest {
         final KeycloakAccount account = new SimpleKeycloakAccount(principal, roles, securityContext);
 
         SecurityContextHolder.getContext()
-                .setAuthentication(new KeycloakAuthenticationToken(account));
+                .setAuthentication(new KeycloakAuthenticationToken(account, false));
         return principal;
     }
 
+    @Override
     @Before
     public void setup() throws Exception {
         super.setup();
@@ -63,6 +64,7 @@ public class UserAdminResourceTest extends BaseKeycloakRestTest {
         tearDown();
     }
 
+    @Override
     @After
     public void tearDown() throws Exception {
         super.tearDown();
@@ -75,7 +77,7 @@ public class UserAdminResourceTest extends BaseKeycloakRestTest {
 
 
     @Test
-    public void shouldFindSuperAdmin() throws Exception {
+    public void shouldFindSuperAdmin() {
         // given
 
         // when
@@ -89,7 +91,7 @@ public class UserAdminResourceTest extends BaseKeycloakRestTest {
     }
 
     @Test
-    public void shouldFindAllAdmins() throws Exception {
+    public void shouldFindAllAdmins() {
         // given
 
         // when
@@ -141,7 +143,7 @@ public class UserAdminResourceTest extends BaseKeycloakRestTest {
     }
 
     @Test
-    public void shouldSetTemporaryPassword() throws Exception {
+    public void shouldSetTemporaryPassword() {
         // given
         UserRepresentation userRepresentation = new UserRepresentation();
         userRepresentation.setUsername("testuser1");
@@ -164,7 +166,7 @@ public class UserAdminResourceTest extends BaseKeycloakRestTest {
     }
 
     @Test
-    public void shouldFindAllGroups() throws Exception {
+    public void shouldFindAllGroups() {
         // given
 
         // when
@@ -181,7 +183,7 @@ public class UserAdminResourceTest extends BaseKeycloakRestTest {
     }
 
     @Test
-    public void shouldFindGroupsOfSuperadminUser() throws Exception {
+    public void shouldFindGroupsOfSuperadminUser() {
         // given
 
         // when
@@ -200,7 +202,7 @@ public class UserAdminResourceTest extends BaseKeycloakRestTest {
     }
 
     @Test
-    public void shouldAddGroupToUser() throws Exception {
+    public void shouldAddGroupToUser() {
         // given
         UserRepresentation userRepresentation = new UserRepresentation();
         userRepresentation.setUsername("testuser1");
