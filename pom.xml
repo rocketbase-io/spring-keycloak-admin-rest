@@ -6,7 +6,7 @@
 
     <groupId>io.rocketbase.keycloak</groupId>
     <artifactId>spring-keycloak-admin-rest</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
